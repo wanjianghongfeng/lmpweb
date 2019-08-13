@@ -12,15 +12,6 @@ module.exports = {
         limit: 10000
       })
   },
-  devServer: {
-    proxy: {
-     '/uaa': {
-      target: process.env.VUE_APP_API_HOST,
-      ws: true,
-      changeOrigin: true
-     }
-    }
-  }
 
 }
 

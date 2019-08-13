@@ -13,9 +13,10 @@
         >
           <el-menu-item class="title">
             <img src="../assets/images/commom/a.png">
-            <span slot="title" >管理平台</span>
+            <span slot="title" >安翼社区</span>
           </el-menu-item>
 
+     
           <div v-for="item in this.treeListData">
           <el-submenu :index="String(item.id)" v-show="item.remark">
             <template slot="title"> 
@@ -71,10 +72,10 @@
                 </el-dropdown>
               </li>
             </ul>
+
           </div>
         </div>
         <div class="zhsq-content">
-          <div class="zhsq-bg"></div>
           <div class="zhsq-fluid">
             <router-view ></router-view>
           </div>
@@ -314,7 +315,7 @@
         this.treeListData[i].pid=true
         }
       } 
-      },
+      }, 
       async submit() {
         await this.$refs.form.validate(async(valid, invalidFields) => {
           if (valid) {
@@ -333,7 +334,6 @@
                 this.loading = false
                 throw err
               })
-
           } else {
             const firstKey = keys(invalidFields)[0]
             this.firstErr = invalidFields[firstKey][0]
@@ -341,13 +341,19 @@
         })
       }
     },
+    created() {
+      this.getRolePermissionsTreeIndex()
+    },
     mounted(){
       this.userId=JSON.parse(localStorage.getItem('user')).id;
       this.userName=JSON.parse(localStorage.getItem('user')).name;
       this.organType=JSON.parse(localStorage.getItem('user')).organType;
       this.orgId=JSON.parse(localStorage.getItem('user')).organId;
       this.active=this.$route.fullPath;
+      // this.src=process.env.VUE_APP_GOVERNMENT+orgId
+      // console.log(this.src);
       let authorities=JSON.parse(localStorage.getItem('authorities'))
+     
     },
   }
 </script>

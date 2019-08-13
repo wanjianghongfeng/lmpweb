@@ -28,7 +28,7 @@ export default [{
   methods: ['put']
 },{
   name: 'organList', // 机构类型列表
-  url: '/system/organ/pageList',
+  url: '/system/organ/page',
   methods: ['get']
 },{
   name: 'deleteOrgan', // 删除机构类型

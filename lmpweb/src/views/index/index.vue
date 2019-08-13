@@ -58,11 +58,6 @@ export default {
     this.center=[JSON.parse(localStorage.getItem('user')).x,JSON.parse(localStorage.getItem('user')).y]
     this.organPath= JSON.parse(localStorage.getItem('user')).organPath;
     this.organPath=this.organPath.replace(new RegExp('/','g'),".")
-    this.personFilter.orgId=JSON.parse(localStorage.getItem('user')).organId;
-    this.vehicleFilter.organId=JSON.parse(localStorage.getItem('user')).organId;
-    this._fetchVehicleData();
-    this._fetchPersonData();
-    this._fetchStatistics();
 
     this.initWebSocket();
   },
@@ -72,39 +67,6 @@ export default {
       window.onresize =()=> {
         this.tabHeight=this.$refs.innerBody.offsetHeight-40
       };
-    },
-    _fetchVehicleData:async function() {
-      const data = await Api.vehicleRecord.post(this.vehicleFilter, {
-      }).then(res => res.data)
-      this.vehicleData = data.rows
-    },
-    _fetchPersonData:async function() {
-      const data = await Api.openDoorRecord.get(this.personFilter, {
-      }).then(res => res.data)
-      this.personData = data.rows
-    },
-    //统计
-    _fetchStatistics:async function() {
-      const house = await Api.getDistrictStatistics.get({},{pathParams: {id: this.personFilter.orgId, type:1}})
-      const person =  await Api.indexStatistics.get()
-      Promise.all([house, person]).then(([res1, res2]) => {
-        let organName=JSON.parse(localStorage.getItem('user')).organName;
-        this.content=
-          '<div class="map-content">' +
-          ' <h4>'+organName+'</h4>' +
-          ' <div class="flex">' +
-              '<div class="flexItem">共有房屋:'+(res1.data.result.leaseCount+res1.data.result.vacantCount+res1.data.result.selfOccupiedCount)+ '</div>' +
-              '<div class="flexItem">出租房屋:'+res1.data.result.leaseCount+'</div>' +
-          ' </div>'+
-          ' <div class="flex">' +
-            '<div class="flexItem">空置房屋:'+res1.data.result.vacantCount+'</div>' +
-            '<div class="flexItem">自住房屋:'+res1.data.result.selfOccupiedCount+'</div>' +
-          ' </div>'+
-          ' <div class="flex">' +
-            '<div class="flexItem">常驻人口:'+res2.data.result.longLivedNum+'</div>' +
-            '<div class="flexItem">暂住人口:'+res2.data.result.floatingNum+'</div>' +
-          ' </div>'
-      })
     },
     //
     initWebSocket(){

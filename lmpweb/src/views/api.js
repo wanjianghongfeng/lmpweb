@@ -8,14 +8,18 @@ export default [{
   methods: ['get']
 }, {
   name: 'logouting', // 登出
-  url: '/logouting',
+  url: '/uaa/logouting',
   methods: ['get']
 },  {
-  name: 'organTree', // 机构列表
+  name: 'organTree', // 小区列表
   url: '/system/organ/treeList',
   methods: ['get']
 },  {
   name: 'changePwd', // 修改密码
   url: '/system/user/modifyPwd/:userId',
   methods: ['put']
+},{
+  name: 'getRolePermissionsTreeIndex', //
+  url: '/system/resource/treeList',
+  methods: ['get']
 }]

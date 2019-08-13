@@ -125,11 +125,38 @@ export default {
         this.code += random[index];
       }
     },
+    // 回填
+    userLogin(){
+        let userLogin = localStorage.getItem('userLogin')
+        if (this.checked) {
+          if (userLogin) {
+        userLogin = JSON.parse(localStorage.getItem('userLogin'))
+        this.user.username = userLogin.username
+        this.user.password = userLogin.password
+        this.checked = true
+            }
+        }
+        else{
+          this.user.username =''
+          this.user.password =''
+        }
+
+    },
+    seeTable(){
+      if(this.checked==false){
+         this.user.username =''
+          this.user.password =''
+      }
+    },
     //登录
     submitForm() {
       this.$refs.form.validate((valid, invalidFields) => {
         this.invalidFields = invalidFields
         if (valid) {
+          if(this.checked==true){
+        let userLogin = { username: this.user.username, password: this.user.password,checked: true}
+        localStorage.setItem('userLogin', JSON.stringify(userLogin))
+      }
           const redirect = this.$route.query.redirect
           this.loginLoading=true
           let config={
@@ -158,7 +185,7 @@ export default {
 
         }
       })
-    }
+    },
   }
 };
 </script>

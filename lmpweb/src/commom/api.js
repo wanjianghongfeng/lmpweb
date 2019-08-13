@@ -6,7 +6,7 @@ import router  from '../router.js'
 import qs from 'qs'
 const loadingInstances = {}
 export const http = axios.create({
-  baseURL: '',
+  baseURL: process.env.VUE_APP_API_HOST,
   timeout: 20000,
   transformRequest: [(data, headers) => {
     if (data && headers['Content-Type'] && ~headers['Content-Type'].indexOf('x-www-form-urlencoded')) {
